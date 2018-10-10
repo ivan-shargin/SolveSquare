@@ -5,11 +5,11 @@
 //=====================================================
 const int    INFINITE=-1,//infinite number of roots(nRoots)
              STRANGEnRoots=-2;
-const char
 
 //======================================================
-int SolveSquare(double a,double b,double c,double* x1,double* x2);
-int SolveLinear(double b,double c,double* x);//function for a=0
+int SolveSquare(double a, double b, double c, double* x1, double* x2);
+int SolveLinear(double b, double c, double* x);//function for a=0
+int GetCoefficients(double* a, double* b, double* c);
 
 //=====================================================
 int main()
@@ -18,9 +18,9 @@ int main()
   double x1=NAN,x2=NAN;//first root and second root(if there is one root program uses x1)
   double a=NAN,b=NAN,c=NAN;//coefficients of square equation a*x^2+b*x+c=0
 //.............................
-  printf("#Square equation solver. version 1.1(c) by Ivanko Shargin\n");
-  printf("Enter coefficients(a*x^2+b*x+c=0) a,b,c:\n");
-  scanf("%lg %lg %lg",&a,&b,&c);
+  printf("#Square equation solver. version 1.1(c) by Ivanko Shargin\n\n");
+
+  GetCoefficients(&a, &b, &c);
 
   nRoots=SolveSquare(a,b,c,&x1,&x2);
 
@@ -42,6 +42,22 @@ int main()
 }
 
 //======================================================
+
+//--------------------------------------------------------------
+int GetCoefficients(double* a,double* b,double* c)
+{
+  for(;;)
+  {
+    printf("Enter coefficients(a*x^2+b*x+c=0) a,b,c and press <<enter>> :\n");
+    scanf("%lg %lg %lg",a,b,c);
+    if ((*a==*a) && (*b==*b) && (*c==*c)) break;
+    for(int rubbish='r';(rubbish=getchar())!='\n';)
+      ;
+    printf("\nWrong format of coefficients, try again.\n");
+  }
+}
+
+//---------------------------------------------------------------
 int SolveSquare(double a,double b,double c,double* x1,double* x2)
 {
   if (a==0) return SolveLinear(b,c,x1);
@@ -65,6 +81,7 @@ int SolveSquare(double a,double b,double c,double* x1,double* x2)
   if (discriminant<0) return 0;
 }
 
+//------------------------------------------------------
 int SolveLinear(double b,double c,double* x)
 {
   if ((b==0) && (c==0))  return INFINITE;
@@ -75,4 +92,3 @@ int SolveLinear(double b,double c,double* x)
     return 1;
   }
 }
-# SolveSquare
