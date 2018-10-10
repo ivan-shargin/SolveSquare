@@ -2,6 +2,7 @@
 #include <math.h>
 
 
+
 //=====================================================
 const int    INFINITE=-1,//infinite number of roots(nRoots)
              STRANGEnRoots=-2;
@@ -14,31 +15,40 @@ int GetCoefficients(double* a, double* b, double* c);
 //=====================================================
 int main()
 {
-  int    nRoots=STRANGEnRoots;//number of roots
-  double x1=NAN,x2=NAN;//first root and second root(if there is one root program uses x1)
-  double a=NAN,b=NAN,c=NAN;//coefficients of square equation a*x^2+b*x+c=0
+    int    nRoots = STRANGEnRoots;//number of roots
+    double x1=NAN,x2=NAN;//first root and second root(if there is one root program uses x1)
+    double a=NAN,b=NAN,c=NAN;//coefficients of square equation a*x^2+b*x+c=0
 //.............................
-  printf("#Square equation solver. version 1.1(c) by Ivanko Shargin\n\n");
+    printf("#Square equation solver. version 1.1(c) by Ivanko Shargin\n\n");
 
-  GetCoefficients(&a, &b, &c);
+    GetCoefficients(&a, &b, &c);
 
-  nRoots=SolveSquare(a,b,c,&x1,&x2);
+    nRoots=SolveSquare(a,b,c,&x1,&x2);
 
-  switch (nRoots)
-  {
-    case 1:        printf("One root in this equation x=%lg\n",x1);break;
+    switch (nRoots)
+    {
+    case 1:
+        printf("One root in this equation x=%lg\n",x1);
+        break;
 
-    case 2:        printf("first root x1=%lg; second root x2=%lg\n",x1,x2);break;
+    case 2:
+        printf("first root x1=%lg; second root x2=%lg\n",x1,x2);
+        break;
 
-    case 0:        printf("No roots\n");break;
+    case 0:
+        printf("No roots\n");
+        break;
 
-    case INFINITE:       printf("Infinite number of roots\n");break;
+    case INFINITE:
+        printf("Infinite number of roots\n");
+        break;
 
-    default:       printf("Strange number of roots nRoots=%i in SolveSquare(%lg,%lg,%lg,&x1,&x2)\n",nRoots,a,b,c);
-                   return STRANGEnRoots;
-  }
+    default:
+        printf("Strange number of roots nRoots=%i in SolveSquare(%lg,%lg,%lg,&x1,&x2)\n",nRoots,a,b,c);
+        return STRANGEnRoots;
+    }
 
-  return 0;
+    return 0;
 }
 
 //======================================================
@@ -46,49 +56,52 @@ int main()
 //--------------------------------------------------------------
 int GetCoefficients(double* a,double* b,double* c)
 {
-  for(;;)
-  {
-    printf("Enter coefficients(a*x^2+b*x+c=0) a,b,c and press <<enter>> :\n");
-    scanf("%lg %lg %lg",a,b,c);
-    if ((*a==*a) && (*b==*b) && (*c==*c)) break;
-    for(int rubbish='r';(rubbish=getchar())!='\n';)
-      ;
-    printf("\nWrong format of coefficients, try again.\n");
-  }
+    for(;;)
+    {
+        printf("Enter coefficients(a*x^2+b*x+c=0) a,b,c and press <<enter>> :\n");
+
+        if ( (scanf("%lg %lg %lg",a,b,c)==3) && (isfinite(*a)) && (isfinite(*b)) && (isfinite(*c)) ) break;
+
+        scanf("%*[^\n]");
+
+        printf("\nWrong format of coefficients, try again. Ne durachitsya!\n");
+    }
 }
 
 //---------------------------------------------------------------
 int SolveSquare(double a,double b,double c,double* x1,double* x2)
 {
-  if (a==0) return SolveLinear(b,c,x1);
+    if (a == 0) return SolveLinear(b,c,x1);
 
-  double discriminant=b*b-4.0*a*c;
+    double discriminant = b*b-4.0*a*c;
 
-  if (discriminant>0)
-  {
-    double sqrtdis=sqrt(discriminant);
-           *x1=(-b+sqrtdis)/(2.0*a);
-           *x2=(-b-sqrtdis)/(2.0*a);
-           return 2;
-  }
+    if (discriminant>0)
+    {
+        double sqrtdis=sqrt(discriminant);
+        *x1 = (-b+sqrtdis)/(2.0*a);
+        *x2 = (-b-sqrtdis)/(2.0*a);
+        return 2;
+    }
 
-  if (discriminant==0)
-  {
-           *x1=-b/(2.0*a);
-           return 1;
-  }
+    if (discriminant == 0)
+    {
+        *x1 = -b/(2.0*a);
+        return 1;
+    }
 
-  if (discriminant<0) return 0;
+    if (discriminant<0) return 0;
 }
 
 //------------------------------------------------------
 int SolveLinear(double b,double c,double* x)
 {
-  if ((b==0) && (c==0))  return INFINITE;
-  if ((b==0) && !(c==0)) return 0;
+    if (b == 0)
+        if (c == 0) return INFINITE;
+        else
+        return 0;
 
-  {
-    *x=-c/b;
-    return 1;
-  }
+    {
+        *x=-c/b;
+        return 1;
+    }
 }
