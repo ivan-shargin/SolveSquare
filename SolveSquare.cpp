@@ -4,8 +4,8 @@
 
 
 //=====================================================
-const int    INFINITE=-1,//infinite number of roots(nRoots)
-             STRANGEnRoots=-2;
+const int    INFINITE = -1,//infinite number of roots(nRoots)
+             STRANGEnRoots = -2;
 
 //======================================================
 int SolveSquare(double a, double b, double c, double* x1, double* x2);
@@ -16,8 +16,8 @@ int GetCoefficients(double* a, double* b, double* c);
 int main()
 {
     int    nRoots = STRANGEnRoots;//number of roots
-    double x1=NAN,x2=NAN;//first root and second root(if there is one root program uses x1)
-    double a=NAN,b=NAN,c=NAN;//coefficients of square equation a*x^2+b*x+c=0
+    double x1 = NAN,x2 = NAN;//first root and second root(if there is one root program uses x1)
+    double a = NAN,b = NAN,c = NAN;//coefficients of square equation a*x^2+b*x+c=0
 //.............................
     printf("#Square equation solver. version 1.1(c) by Ivanko Shargin\n\n");
 
@@ -60,7 +60,7 @@ int GetCoefficients(double* a,double* b,double* c)
     {
         printf("Enter coefficients(a*x^2+b*x+c=0) a,b,c and press <<enter>> :\n");
 
-        if ( (scanf("%lg %lg %lg",a,b,c)==3) && (isfinite(*a)) && (isfinite(*b)) && (isfinite(*c)) ) break;
+        if ( (scanf("%lg %lg %lg",a,b,c) ==  3) && (isfinite(*a)) && (isfinite(*b)) && (isfinite(*c)) ) break;
 
         scanf("%*[^\n]");
 
@@ -101,7 +101,7 @@ int SolveLinear(double b,double c,double* x)
         return 0;
 
     {
-        *x=-c/b;
+        *x = -c/b;
         return 1;
     }
 }
